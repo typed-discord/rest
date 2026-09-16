@@ -6758,8 +6758,11 @@ export interface ApplicationResponse {
     type: null | ApplicationTypes;
     coverImage?: string;
     primarySkuId?: SnowflakeType;
+    flags: number;
+    flagsNew: string;
     bot?: UserResponse;
     slug?: string;
+    vibegrationsProjectId?: SnowflakeType;
     guildId?: SnowflakeType;
     rpcOrigins?: string[];
     botPublic?: boolean;
@@ -6770,8 +6773,6 @@ export interface ApplicationResponse {
     installParams?: ApplicationOAuth2InstallParamsResponse;
     integrationTypesConfig?: Map<string, ApplicationIntegrationTypeConfigurationResponse>;
     verifyKey: string;
-    flags: number;
-    flagsNew: string;
     maxParticipants?: number | null;
     tags?: Set<string>;
 }
@@ -6784,8 +6785,11 @@ export function fromRawApplicationResponse(src: RawTypes.ApplicationResponse): A
         type: src.type,
         coverImage: src.cover_image,
         primarySkuId: src.primary_sku_id,
+        flags: src.flags,
+        flagsNew: src.flags_new,
         bot: src.bot == null ? src.bot : fromRawUserResponse(src.bot),
         slug: src.slug,
+        vibegrationsProjectId: src.vibegrations_project_id,
         guildId: src.guild_id,
         rpcOrigins: src.rpc_origins,
         botPublic: src.bot_public,
@@ -6796,8 +6800,6 @@ export function fromRawApplicationResponse(src: RawTypes.ApplicationResponse): A
         installParams: src.install_params == null ? src.install_params : fromRawApplicationOAuth2InstallParamsResponse(src.install_params),
         integrationTypesConfig: src.integration_types_config == null ? src.integration_types_config : new Map(Object.entries(src.integration_types_config).map(([key, value]) => [key, fromRawApplicationIntegrationTypeConfigurationResponse(value)])),
         verifyKey: src.verify_key,
-        flags: src.flags,
-        flagsNew: src.flags_new,
         maxParticipants: src.max_participants,
         tags: src.tags == null ? src.tags : new Set(src.tags)
     };
@@ -6811,8 +6813,11 @@ export function toRawApplicationResponse(src: ApplicationResponse): RawTypes.App
         type: src.type,
         cover_image: src.coverImage,
         primary_sku_id: src.primarySkuId,
+        flags: src.flags,
+        flags_new: src.flagsNew,
         bot: src.bot == null ? src.bot : toRawUserResponse(src.bot),
         slug: src.slug,
+        vibegrations_project_id: src.vibegrationsProjectId,
         guild_id: src.guildId,
         rpc_origins: src.rpcOrigins,
         bot_public: src.botPublic,
@@ -6823,8 +6828,6 @@ export function toRawApplicationResponse(src: ApplicationResponse): RawTypes.App
         install_params: src.installParams == null ? src.installParams : toRawApplicationOAuth2InstallParamsResponse(src.installParams),
         integration_types_config: src.integrationTypesConfig == null ? src.integrationTypesConfig : Object.fromEntries([...src.integrationTypesConfig].map(([key, value]) => [key, toRawApplicationIntegrationTypeConfigurationResponse(value)])),
         verify_key: src.verifyKey,
-        flags: src.flags,
-        flags_new: src.flagsNew,
         max_participants: src.maxParticipants,
         tags: src.tags == null ? src.tags : [...src.tags]
     };
@@ -6837,8 +6840,11 @@ export class ApplicationResponseBuilder implements ApplicationResponse {
     #type!: null | ApplicationTypes;
     #coverImage?: string;
     #primarySkuId?: SnowflakeType;
+    #flags!: number;
+    #flagsNew!: string;
     #bot?: UserResponse;
     #slug?: string;
+    #vibegrationsProjectId?: SnowflakeType;
     #guildId?: SnowflakeType;
     #rpcOrigins?: string[];
     #botPublic?: boolean;
@@ -6849,8 +6855,6 @@ export class ApplicationResponseBuilder implements ApplicationResponse {
     #installParams?: ApplicationOAuth2InstallParamsResponse;
     #integrationTypesConfig?: Map<string, ApplicationIntegrationTypeConfigurationResponse>;
     #verifyKey!: string;
-    #flags!: number;
-    #flagsNew!: string;
     #maxParticipants?: number | null;
     #tags?: Set<string>;
     constructor(options: {
@@ -6861,8 +6865,11 @@ export class ApplicationResponseBuilder implements ApplicationResponse {
         type: null | ApplicationTypes;
         coverImage?: string;
         primarySkuId?: SnowflakeType;
+        flags: number;
+        flagsNew: string;
         bot?: UserResponse;
         slug?: string;
+        vibegrationsProjectId?: SnowflakeType;
         guildId?: SnowflakeType;
         rpcOrigins?: string[];
         botPublic?: boolean;
@@ -6875,8 +6882,6 @@ export class ApplicationResponseBuilder implements ApplicationResponse {
             [key: string]: RawTypes.ApplicationIntegrationTypeConfigurationResponse;
         };
         verifyKey: string;
-        flags: number;
-        flagsNew: string;
         maxParticipants?: number | null;
         tags?: Set<string> | string[];
     }) {
@@ -6887,8 +6892,11 @@ export class ApplicationResponseBuilder implements ApplicationResponse {
         this.type = options.type;
         this.coverImage = options.coverImage;
         this.primarySkuId = options.primarySkuId;
+        this.flags = options.flags;
+        this.flagsNew = options.flagsNew;
         this.bot = options.bot;
         this.slug = options.slug;
+        this.vibegrationsProjectId = options.vibegrationsProjectId;
         this.guildId = options.guildId;
         this.rpcOrigins = options.rpcOrigins;
         this.botPublic = options.botPublic;
@@ -6899,8 +6907,6 @@ export class ApplicationResponseBuilder implements ApplicationResponse {
         this.installParams = options.installParams;
         this.integrationTypesConfig = options.integrationTypesConfig;
         this.verifyKey = options.verifyKey;
-        this.flags = options.flags;
-        this.flagsNew = options.flagsNew;
         this.maxParticipants = options.maxParticipants;
         this.tags = options.tags;
     }
@@ -6925,11 +6931,20 @@ export class ApplicationResponseBuilder implements ApplicationResponse {
     get primarySkuId(): SnowflakeType | undefined {
         return this.#primarySkuId;
     }
+    get flags(): number {
+        return this.#flags;
+    }
+    get flagsNew(): string {
+        return this.#flagsNew;
+    }
     get bot(): UserResponse | undefined {
         return this.#bot;
     }
     get slug(): string | undefined {
         return this.#slug;
+    }
+    get vibegrationsProjectId(): SnowflakeType | undefined {
+        return this.#vibegrationsProjectId;
     }
     get guildId(): SnowflakeType | undefined {
         return this.#guildId;
@@ -6961,12 +6976,6 @@ export class ApplicationResponseBuilder implements ApplicationResponse {
     get verifyKey(): string {
         return this.#verifyKey;
     }
-    get flags(): number {
-        return this.#flags;
-    }
-    get flagsNew(): string {
-        return this.#flagsNew;
-    }
     get maxParticipants(): (number | null) | undefined {
         return this.#maxParticipants;
     }
@@ -6994,11 +7003,20 @@ export class ApplicationResponseBuilder implements ApplicationResponse {
     set primarySkuId(value: SnowflakeType | undefined) {
         this.#primarySkuId = value;
     }
+    set flags(value: number) {
+        this.#flags = value;
+    }
+    set flagsNew(value: string) {
+        this.#flagsNew = value;
+    }
     set bot(value: UserResponse | undefined) {
         this.#bot = value;
     }
     set slug(value: string | undefined) {
         this.#slug = value;
+    }
+    set vibegrationsProjectId(value: SnowflakeType | undefined) {
+        this.#vibegrationsProjectId = value;
     }
     set guildId(value: SnowflakeType | undefined) {
         this.#guildId = value;
@@ -7032,12 +7050,6 @@ export class ApplicationResponseBuilder implements ApplicationResponse {
     set verifyKey(value: string) {
         this.#verifyKey = value;
     }
-    set flags(value: number) {
-        this.#flags = value;
-    }
-    set flagsNew(value: string) {
-        this.#flagsNew = value;
-    }
     set maxParticipants(value: (number | null) | undefined) {
         this.#maxParticipants = value;
     }
@@ -7045,7 +7057,7 @@ export class ApplicationResponseBuilder implements ApplicationResponse {
         this.#tags = value == null ? value : new Set(value);
     }
 }
-export function createApplicationResponse(id: SnowflakeType, name: string, icon: string | null, description: string, type: null | ApplicationTypes, verifyKey: string, flags: number, flagsNew: string, coverImage?: string, primarySkuId?: SnowflakeType, bot?: UserResponse, slug?: string, guildId?: SnowflakeType, rpcOrigins?: string[], botPublic?: boolean, botRequireCodeGrant?: boolean, termsOfServiceUrl?: URL | `${string}:${string}`, privacyPolicyUrl?: URL | `${string}:${string}`, customInstallUrl?: URL | `${string}:${string}`, installParams?: ApplicationOAuth2InstallParamsResponse, integrationTypesConfig?: Map<string, ApplicationIntegrationTypeConfigurationResponse> | {
+export function createApplicationResponse(id: SnowflakeType, name: string, icon: string | null, description: string, type: null | ApplicationTypes, flags: number, flagsNew: string, verifyKey: string, coverImage?: string, primarySkuId?: SnowflakeType, bot?: UserResponse, slug?: string, vibegrationsProjectId?: SnowflakeType, guildId?: SnowflakeType, rpcOrigins?: string[], botPublic?: boolean, botRequireCodeGrant?: boolean, termsOfServiceUrl?: URL | `${string}:${string}`, privacyPolicyUrl?: URL | `${string}:${string}`, customInstallUrl?: URL | `${string}:${string}`, installParams?: ApplicationOAuth2InstallParamsResponse, integrationTypesConfig?: Map<string, ApplicationIntegrationTypeConfigurationResponse> | {
     [key: string]: RawTypes.ApplicationIntegrationTypeConfigurationResponse;
 }, maxParticipants?: number | null, tags?: Set<string> | string[]): ApplicationResponse { return {
     id: id,
@@ -7053,13 +7065,14 @@ export function createApplicationResponse(id: SnowflakeType, name: string, icon:
     icon: icon,
     description: description,
     type: type,
-    verifyKey: verifyKey,
     flags: flags,
     flagsNew: flagsNew,
+    verifyKey: verifyKey,
     coverImage: coverImage,
     primarySkuId: primarySkuId,
     bot: bot,
     slug: slug,
+    vibegrationsProjectId: vibegrationsProjectId,
     guildId: guildId,
     rpcOrigins: rpcOrigins,
     botPublic: botPublic,
@@ -8695,6 +8708,8 @@ export interface BasicApplicationResponseWithBot {
     type: null | ApplicationTypes;
     coverImage?: string;
     primarySkuId?: SnowflakeType;
+    flags: number;
+    flagsNew: string;
     bot?: UserResponse;
 }
 export function fromRawBasicApplicationResponseWithBot(src: RawTypes.BasicApplicationResponseWithBot): BasicApplicationResponseWithBot {
@@ -8706,6 +8721,8 @@ export function fromRawBasicApplicationResponseWithBot(src: RawTypes.BasicApplic
         type: src.type,
         coverImage: src.cover_image,
         primarySkuId: src.primary_sku_id,
+        flags: src.flags,
+        flagsNew: src.flags_new,
         bot: src.bot == null ? src.bot : fromRawUserResponse(src.bot)
     };
 }
@@ -8718,6 +8735,8 @@ export function toRawBasicApplicationResponseWithBot(src: BasicApplicationRespon
         type: src.type,
         cover_image: src.coverImage,
         primary_sku_id: src.primarySkuId,
+        flags: src.flags,
+        flags_new: src.flagsNew,
         bot: src.bot == null ? src.bot : toRawUserResponse(src.bot)
     };
 }
@@ -8729,6 +8748,8 @@ export class BasicApplicationResponseWithBotBuilder implements BasicApplicationR
     #type!: null | ApplicationTypes;
     #coverImage?: string;
     #primarySkuId?: SnowflakeType;
+    #flags!: number;
+    #flagsNew!: string;
     #bot?: UserResponse;
     constructor(options: {
         id: SnowflakeType;
@@ -8738,6 +8759,8 @@ export class BasicApplicationResponseWithBotBuilder implements BasicApplicationR
         type: null | ApplicationTypes;
         coverImage?: string;
         primarySkuId?: SnowflakeType;
+        flags: number;
+        flagsNew: string;
         bot?: UserResponse;
     }) {
         this.id = options.id;
@@ -8747,6 +8770,8 @@ export class BasicApplicationResponseWithBotBuilder implements BasicApplicationR
         this.type = options.type;
         this.coverImage = options.coverImage;
         this.primarySkuId = options.primarySkuId;
+        this.flags = options.flags;
+        this.flagsNew = options.flagsNew;
         this.bot = options.bot;
     }
     get id(): SnowflakeType {
@@ -8769,6 +8794,12 @@ export class BasicApplicationResponseWithBotBuilder implements BasicApplicationR
     }
     get primarySkuId(): SnowflakeType | undefined {
         return this.#primarySkuId;
+    }
+    get flags(): number {
+        return this.#flags;
+    }
+    get flagsNew(): string {
+        return this.#flagsNew;
     }
     get bot(): UserResponse | undefined {
         return this.#bot;
@@ -8794,16 +8825,24 @@ export class BasicApplicationResponseWithBotBuilder implements BasicApplicationR
     set primarySkuId(value: SnowflakeType | undefined) {
         this.#primarySkuId = value;
     }
+    set flags(value: number) {
+        this.#flags = value;
+    }
+    set flagsNew(value: string) {
+        this.#flagsNew = value;
+    }
     set bot(value: UserResponse | undefined) {
         this.#bot = value;
     }
 }
-export function createBasicApplicationResponseWithBot(id: SnowflakeType, name: string, icon: string | null, description: string, type: null | ApplicationTypes, coverImage?: string, primarySkuId?: SnowflakeType, bot?: UserResponse): BasicApplicationResponseWithBot { return {
+export function createBasicApplicationResponseWithBot(id: SnowflakeType, name: string, icon: string | null, description: string, type: null | ApplicationTypes, flags: number, flagsNew: string, coverImage?: string, primarySkuId?: SnowflakeType, bot?: UserResponse): BasicApplicationResponseWithBot { return {
     id: id,
     name: name,
     icon: icon,
     description: description,
     type: type,
+    flags: flags,
+    flagsNew: flagsNew,
     coverImage: coverImage,
     primarySkuId: primarySkuId,
     bot: bot
@@ -12866,6 +12905,10 @@ export interface CreateGuildInviteRequest {
     targetApplicationId?: null | SnowflakeType;
     targetType?: null | (InviteTargetTypes.STREAM | InviteTargetTypes.EMBEDDED_APPLICATION);
     roleIds?: (string | RawTypes.SnowflakeType[]) | null;
+    /**
+     * The IDs of the users to target with this invite.
+     */
+    targetUserIds?: (string | RawTypes.SnowflakeType[]) | null;
 }
 export function fromRawCreateGuildInviteRequest(src: RawTypes.CreateGuildInviteRequest): CreateGuildInviteRequest {
     return {
@@ -12876,7 +12919,8 @@ export function fromRawCreateGuildInviteRequest(src: RawTypes.CreateGuildInviteR
         targetUserId: src.target_user_id,
         targetApplicationId: src.target_application_id,
         targetType: src.target_type,
-        roleIds: src.role_ids
+        roleIds: src.role_ids,
+        targetUserIds: src.target_user_ids
     };
 }
 export function toRawCreateGuildInviteRequest(src: CreateGuildInviteRequest): RawTypes.CreateGuildInviteRequest {
@@ -12888,7 +12932,8 @@ export function toRawCreateGuildInviteRequest(src: CreateGuildInviteRequest): Ra
         target_user_id: src.targetUserId,
         target_application_id: src.targetApplicationId,
         target_type: src.targetType,
-        role_ids: src.roleIds
+        role_ids: src.roleIds,
+        target_user_ids: src.targetUserIds
     };
 }
 export class CreateGuildInviteRequestBuilder implements CreateGuildInviteRequest {
@@ -12900,6 +12945,10 @@ export class CreateGuildInviteRequestBuilder implements CreateGuildInviteRequest
     #targetApplicationId?: null | SnowflakeType;
     #targetType?: null | (InviteTargetTypes.STREAM | InviteTargetTypes.EMBEDDED_APPLICATION);
     #roleIds?: (string | RawTypes.SnowflakeType[]) | null;
+    /**
+     * The IDs of the users to target with this invite.
+     */
+    #targetUserIds?: (string | RawTypes.SnowflakeType[]) | null;
     constructor(options: {
         maxAge?: number | null;
         temporary?: boolean | null;
@@ -12909,6 +12958,10 @@ export class CreateGuildInviteRequestBuilder implements CreateGuildInviteRequest
         targetApplicationId?: null | SnowflakeType;
         targetType?: null | (InviteTargetTypes.STREAM | InviteTargetTypes.EMBEDDED_APPLICATION);
         roleIds?: (string | RawTypes.SnowflakeType[]) | null;
+        /**
+         * The IDs of the users to target with this invite.
+         */
+        targetUserIds?: (string | RawTypes.SnowflakeType[]) | null;
     }) {
         this.maxAge = options.maxAge;
         this.temporary = options.temporary;
@@ -12918,6 +12971,7 @@ export class CreateGuildInviteRequestBuilder implements CreateGuildInviteRequest
         this.targetApplicationId = options.targetApplicationId;
         this.targetType = options.targetType;
         this.roleIds = options.roleIds;
+        this.targetUserIds = options.targetUserIds;
     }
     get maxAge(): (number | null) | undefined {
         return this.#maxAge;
@@ -12943,6 +12997,9 @@ export class CreateGuildInviteRequestBuilder implements CreateGuildInviteRequest
     get roleIds(): ((string | RawTypes.SnowflakeType[]) | null) | undefined {
         return this.#roleIds;
     }
+    get targetUserIds(): ((string | RawTypes.SnowflakeType[]) | null) | undefined {
+        return this.#targetUserIds;
+    }
     set maxAge(value: (number | null) | undefined) {
         this.#maxAge = value;
     }
@@ -12967,8 +13024,11 @@ export class CreateGuildInviteRequestBuilder implements CreateGuildInviteRequest
     set roleIds(value: ((string | RawTypes.SnowflakeType[]) | null) | undefined) {
         this.#roleIds = value;
     }
+    set targetUserIds(value: ((string | RawTypes.SnowflakeType[]) | null) | undefined) {
+        this.#targetUserIds = value;
+    }
 }
-export function createCreateGuildInviteRequest(maxAge?: number | null, temporary?: boolean | null, maxUses?: number | null, unique?: boolean | null, targetUserId?: null | SnowflakeType, targetApplicationId?: null | SnowflakeType, targetType?: null | (InviteTargetTypes.STREAM | InviteTargetTypes.EMBEDDED_APPLICATION), roleIds?: (string | RawTypes.SnowflakeType[]) | null): CreateGuildInviteRequest { return {
+export function createCreateGuildInviteRequest(maxAge?: number | null, temporary?: boolean | null, maxUses?: number | null, unique?: boolean | null, targetUserId?: null | SnowflakeType, targetApplicationId?: null | SnowflakeType, targetType?: null | (InviteTargetTypes.STREAM | InviteTargetTypes.EMBEDDED_APPLICATION), roleIds?: (string | RawTypes.SnowflakeType[]) | null, targetUserIds?: (string | RawTypes.SnowflakeType[]) | null): CreateGuildInviteRequest { return {
     maxAge: maxAge,
     temporary: temporary,
     maxUses: maxUses,
@@ -12976,7 +13036,8 @@ export function createCreateGuildInviteRequest(maxAge?: number | null, temporary
     targetUserId: targetUserId,
     targetApplicationId: targetApplicationId,
     targetType: targetType,
-    roleIds: roleIds
+    roleIds: roleIds,
+    targetUserIds: targetUserIds
 }; }
 export interface CreateMessageInteractionCallbackRequest {
     type: InteractionCallbackTypes.CHANNEL_MESSAGE_WITH_SOURCE;
@@ -19823,7 +19884,6 @@ export interface GuildInviteResponse {
     guildScheduledEvent?: ScheduledEventResponse;
     targetChannelId?: SnowflakeType;
     targetMessageId?: SnowflakeType;
-    liveliness?: null | GuildLivelinessResponse;
     uses?: number;
     maxUses?: number;
     temporary?: boolean;
@@ -19851,7 +19911,6 @@ export function fromRawGuildInviteResponse(src: RawTypes.GuildInviteResponse): G
         guildScheduledEvent: src.guild_scheduled_event == null ? src.guild_scheduled_event : fromRawScheduledEventResponse(src.guild_scheduled_event),
         targetChannelId: src.target_channel_id,
         targetMessageId: src.target_message_id,
-        liveliness: src.liveliness == null ? src.liveliness : fromRawGuildLivelinessResponse(src.liveliness),
         uses: src.uses,
         maxUses: src.max_uses,
         temporary: src.temporary,
@@ -19880,7 +19939,6 @@ export function toRawGuildInviteResponse(src: GuildInviteResponse): RawTypes.Gui
         guild_scheduled_event: src.guildScheduledEvent == null ? src.guildScheduledEvent : toRawScheduledEventResponse(src.guildScheduledEvent),
         target_channel_id: src.targetChannelId,
         target_message_id: src.targetMessageId,
-        liveliness: src.liveliness == null ? src.liveliness : toRawGuildLivelinessResponse(src.liveliness),
         uses: src.uses,
         max_uses: src.maxUses,
         temporary: src.temporary,
@@ -19908,7 +19966,6 @@ export class GuildInviteResponseBuilder implements GuildInviteResponse {
     #guildScheduledEvent?: ScheduledEventResponse;
     #targetChannelId?: SnowflakeType;
     #targetMessageId?: SnowflakeType;
-    #liveliness?: null | GuildLivelinessResponse;
     #uses?: number;
     #maxUses?: number;
     #temporary?: boolean;
@@ -19933,7 +19990,6 @@ export class GuildInviteResponseBuilder implements GuildInviteResponse {
         guildScheduledEvent?: ScheduledEventResponse;
         targetChannelId?: SnowflakeType;
         targetMessageId?: SnowflakeType;
-        liveliness?: null | GuildLivelinessResponse;
         uses?: number;
         maxUses?: number;
         temporary?: boolean;
@@ -19958,7 +20014,6 @@ export class GuildInviteResponseBuilder implements GuildInviteResponse {
         this.guildScheduledEvent = options.guildScheduledEvent;
         this.targetChannelId = options.targetChannelId;
         this.targetMessageId = options.targetMessageId;
-        this.liveliness = options.liveliness;
         this.uses = options.uses;
         this.maxUses = options.maxUses;
         this.temporary = options.temporary;
@@ -20017,9 +20072,6 @@ export class GuildInviteResponseBuilder implements GuildInviteResponse {
     }
     get targetMessageId(): SnowflakeType | undefined {
         return this.#targetMessageId;
-    }
-    get liveliness(): (null | GuildLivelinessResponse) | undefined {
-        return this.#liveliness;
     }
     get uses(): number | undefined {
         return this.#uses;
@@ -20093,9 +20145,6 @@ export class GuildInviteResponseBuilder implements GuildInviteResponse {
     set targetMessageId(value: SnowflakeType | undefined) {
         this.#targetMessageId = value;
     }
-    set liveliness(value: (null | GuildLivelinessResponse) | undefined) {
-        this.#liveliness = value;
-    }
     set uses(value: number | undefined) {
         this.#uses = value;
     }
@@ -20118,7 +20167,7 @@ export class GuildInviteResponseBuilder implements GuildInviteResponse {
         this.#roles = value;
     }
 }
-export function createGuildInviteResponse(code: string, expiresAt: (Date | number | string) | null, guild: InviteGuildResponse, guildId: SnowflakeType, channel: InviteChannelResponse, inviter?: UserResponse, maxAge?: number, createdAt?: Date | number | string, isContact?: boolean, flags?: number, targetType?: InviteTargetTypes, targetUser?: UserResponse, targetApplication?: InviteApplicationResponse, guildScheduledEvent?: ScheduledEventResponse, targetChannelId?: SnowflakeType, targetMessageId?: SnowflakeType, liveliness?: null | GuildLivelinessResponse, uses?: number, maxUses?: number, temporary?: boolean, approximateMemberCount?: number | null, approximatePresenceCount?: number | null, isNicknameChangeable?: boolean, roles?: InviteGuildRoleResponse[] | null): GuildInviteResponse { return {
+export function createGuildInviteResponse(code: string, expiresAt: (Date | number | string) | null, guild: InviteGuildResponse, guildId: SnowflakeType, channel: InviteChannelResponse, inviter?: UserResponse, maxAge?: number, createdAt?: Date | number | string, isContact?: boolean, flags?: number, targetType?: InviteTargetTypes, targetUser?: UserResponse, targetApplication?: InviteApplicationResponse, guildScheduledEvent?: ScheduledEventResponse, targetChannelId?: SnowflakeType, targetMessageId?: SnowflakeType, uses?: number, maxUses?: number, temporary?: boolean, approximateMemberCount?: number | null, approximatePresenceCount?: number | null, isNicknameChangeable?: boolean, roles?: InviteGuildRoleResponse[] | null): GuildInviteResponse { return {
     type: InviteTypes.GUILD,
     code: code,
     expiresAt: expiresAt === null ? expiresAt : new Date(expiresAt),
@@ -20136,7 +20185,6 @@ export function createGuildInviteResponse(code: string, expiresAt: (Date | numbe
     guildScheduledEvent: guildScheduledEvent,
     targetChannelId: targetChannelId,
     targetMessageId: targetMessageId,
-    liveliness: liveliness,
     uses: uses,
     maxUses: maxUses,
     temporary: temporary,
@@ -20390,49 +20438,6 @@ export class GuildJoinRequestsListResponseBuilder implements GuildJoinRequestsLi
 export function createGuildJoinRequestsListResponse(total?: number, guildJoinRequests?: GuildJoinRequestResponse[]): GuildJoinRequestsListResponse { return {
     total: total,
     guildJoinRequests: guildJoinRequests
-}; }
-export interface GuildLivelinessResponse {
-    msgActivityBins: number[];
-    lastUpdatedTs?: Date | null;
-}
-export function fromRawGuildLivelinessResponse(src: RawTypes.GuildLivelinessResponse): GuildLivelinessResponse {
-    return {
-        msgActivityBins: src.msg_activity_bins,
-        lastUpdatedTs: src.last_updated_ts == null ? src.last_updated_ts : new Date(src.last_updated_ts)
-    };
-}
-export function toRawGuildLivelinessResponse(src: GuildLivelinessResponse): RawTypes.GuildLivelinessResponse {
-    return {
-        msg_activity_bins: src.msgActivityBins,
-        last_updated_ts: src.lastUpdatedTs == null ? src.lastUpdatedTs : src.lastUpdatedTs.toISOString()
-    };
-}
-export class GuildLivelinessResponseBuilder implements GuildLivelinessResponse {
-    #msgActivityBins!: number[];
-    #lastUpdatedTs?: Date | null;
-    constructor(options: {
-        msgActivityBins: number[];
-        lastUpdatedTs?: (Date | number | string) | null;
-    }) {
-        this.msgActivityBins = options.msgActivityBins;
-        this.lastUpdatedTs = options.lastUpdatedTs;
-    }
-    get msgActivityBins(): number[] {
-        return this.#msgActivityBins;
-    }
-    get lastUpdatedTs(): (Date | null) | undefined {
-        return this.#lastUpdatedTs;
-    }
-    set msgActivityBins(value: number[]) {
-        this.#msgActivityBins = value;
-    }
-    set lastUpdatedTs(value: ((Date | number | string) | null) | undefined) {
-        this.#lastUpdatedTs = value == null ? value : new Date(value);
-    }
-}
-export function createGuildLivelinessResponse(msgActivityBins: number[], lastUpdatedTs?: (Date | number | string) | null): GuildLivelinessResponse { return {
-    msgActivityBins: msgActivityBins,
-    lastUpdatedTs: lastUpdatedTs == null ? lastUpdatedTs : new Date(lastUpdatedTs)
 }; }
 export enum GuildMFALevel {
     /**
@@ -25264,6 +25269,8 @@ export interface IntegrationApplicationResponse {
     type: null | ApplicationTypes;
     coverImage?: string;
     primarySkuId?: SnowflakeType;
+    flags: number;
+    flagsNew: string;
     bot?: UserResponse;
 }
 export function fromRawIntegrationApplicationResponse(src: RawTypes.IntegrationApplicationResponse): IntegrationApplicationResponse {
@@ -25275,6 +25282,8 @@ export function fromRawIntegrationApplicationResponse(src: RawTypes.IntegrationA
         type: src.type,
         coverImage: src.cover_image,
         primarySkuId: src.primary_sku_id,
+        flags: src.flags,
+        flagsNew: src.flags_new,
         bot: src.bot == null ? src.bot : fromRawUserResponse(src.bot)
     };
 }
@@ -25287,6 +25296,8 @@ export function toRawIntegrationApplicationResponse(src: IntegrationApplicationR
         type: src.type,
         cover_image: src.coverImage,
         primary_sku_id: src.primarySkuId,
+        flags: src.flags,
+        flags_new: src.flagsNew,
         bot: src.bot == null ? src.bot : toRawUserResponse(src.bot)
     };
 }
@@ -25298,6 +25309,8 @@ export class IntegrationApplicationResponseBuilder implements IntegrationApplica
     #type!: null | ApplicationTypes;
     #coverImage?: string;
     #primarySkuId?: SnowflakeType;
+    #flags!: number;
+    #flagsNew!: string;
     #bot?: UserResponse;
     constructor(options: {
         id: SnowflakeType;
@@ -25307,6 +25320,8 @@ export class IntegrationApplicationResponseBuilder implements IntegrationApplica
         type: null | ApplicationTypes;
         coverImage?: string;
         primarySkuId?: SnowflakeType;
+        flags: number;
+        flagsNew: string;
         bot?: UserResponse;
     }) {
         this.id = options.id;
@@ -25316,6 +25331,8 @@ export class IntegrationApplicationResponseBuilder implements IntegrationApplica
         this.type = options.type;
         this.coverImage = options.coverImage;
         this.primarySkuId = options.primarySkuId;
+        this.flags = options.flags;
+        this.flagsNew = options.flagsNew;
         this.bot = options.bot;
     }
     get id(): SnowflakeType {
@@ -25338,6 +25355,12 @@ export class IntegrationApplicationResponseBuilder implements IntegrationApplica
     }
     get primarySkuId(): SnowflakeType | undefined {
         return this.#primarySkuId;
+    }
+    get flags(): number {
+        return this.#flags;
+    }
+    get flagsNew(): string {
+        return this.#flagsNew;
     }
     get bot(): UserResponse | undefined {
         return this.#bot;
@@ -25363,16 +25386,24 @@ export class IntegrationApplicationResponseBuilder implements IntegrationApplica
     set primarySkuId(value: SnowflakeType | undefined) {
         this.#primarySkuId = value;
     }
+    set flags(value: number) {
+        this.#flags = value;
+    }
+    set flagsNew(value: string) {
+        this.#flagsNew = value;
+    }
     set bot(value: UserResponse | undefined) {
         this.#bot = value;
     }
 }
-export function createIntegrationApplicationResponse(id: SnowflakeType, name: string, icon: string | null, description: string, type: null | ApplicationTypes, coverImage?: string, primarySkuId?: SnowflakeType, bot?: UserResponse): IntegrationApplicationResponse { return {
+export function createIntegrationApplicationResponse(id: SnowflakeType, name: string, icon: string | null, description: string, type: null | ApplicationTypes, flags: number, flagsNew: string, coverImage?: string, primarySkuId?: SnowflakeType, bot?: UserResponse): IntegrationApplicationResponse { return {
     id: id,
     name: name,
     icon: icon,
     description: description,
     type: type,
+    flags: flags,
+    flagsNew: flagsNew,
     coverImage: coverImage,
     primarySkuId: primarySkuId,
     bot: bot
@@ -25752,8 +25783,11 @@ export interface InviteApplicationResponse {
     type: null | ApplicationTypes;
     coverImage?: string;
     primarySkuId?: SnowflakeType;
+    flags: number;
+    flagsNew: string;
     bot?: UserResponse;
     slug?: string;
+    vibegrationsProjectId?: SnowflakeType;
     guildId?: SnowflakeType;
     rpcOrigins?: string[];
     botPublic?: boolean;
@@ -25764,8 +25798,6 @@ export interface InviteApplicationResponse {
     installParams?: ApplicationOAuth2InstallParamsResponse;
     integrationTypesConfig?: Map<string, ApplicationIntegrationTypeConfigurationResponse>;
     verifyKey: string;
-    flags: number;
-    flagsNew: string;
     maxParticipants?: number | null;
     tags?: Set<string>;
 }
@@ -25778,8 +25810,11 @@ export function fromRawInviteApplicationResponse(src: RawTypes.InviteApplication
         type: src.type,
         coverImage: src.cover_image,
         primarySkuId: src.primary_sku_id,
+        flags: src.flags,
+        flagsNew: src.flags_new,
         bot: src.bot == null ? src.bot : fromRawUserResponse(src.bot),
         slug: src.slug,
+        vibegrationsProjectId: src.vibegrations_project_id,
         guildId: src.guild_id,
         rpcOrigins: src.rpc_origins,
         botPublic: src.bot_public,
@@ -25790,8 +25825,6 @@ export function fromRawInviteApplicationResponse(src: RawTypes.InviteApplication
         installParams: src.install_params == null ? src.install_params : fromRawApplicationOAuth2InstallParamsResponse(src.install_params),
         integrationTypesConfig: src.integration_types_config == null ? src.integration_types_config : new Map(Object.entries(src.integration_types_config).map(([key, value]) => [key, fromRawApplicationIntegrationTypeConfigurationResponse(value)])),
         verifyKey: src.verify_key,
-        flags: src.flags,
-        flagsNew: src.flags_new,
         maxParticipants: src.max_participants,
         tags: src.tags == null ? src.tags : new Set(src.tags)
     };
@@ -25805,8 +25838,11 @@ export function toRawInviteApplicationResponse(src: InviteApplicationResponse): 
         type: src.type,
         cover_image: src.coverImage,
         primary_sku_id: src.primarySkuId,
+        flags: src.flags,
+        flags_new: src.flagsNew,
         bot: src.bot == null ? src.bot : toRawUserResponse(src.bot),
         slug: src.slug,
+        vibegrations_project_id: src.vibegrationsProjectId,
         guild_id: src.guildId,
         rpc_origins: src.rpcOrigins,
         bot_public: src.botPublic,
@@ -25817,8 +25853,6 @@ export function toRawInviteApplicationResponse(src: InviteApplicationResponse): 
         install_params: src.installParams == null ? src.installParams : toRawApplicationOAuth2InstallParamsResponse(src.installParams),
         integration_types_config: src.integrationTypesConfig == null ? src.integrationTypesConfig : Object.fromEntries([...src.integrationTypesConfig].map(([key, value]) => [key, toRawApplicationIntegrationTypeConfigurationResponse(value)])),
         verify_key: src.verifyKey,
-        flags: src.flags,
-        flags_new: src.flagsNew,
         max_participants: src.maxParticipants,
         tags: src.tags == null ? src.tags : [...src.tags]
     };
@@ -25831,8 +25865,11 @@ export class InviteApplicationResponseBuilder implements InviteApplicationRespon
     #type!: null | ApplicationTypes;
     #coverImage?: string;
     #primarySkuId?: SnowflakeType;
+    #flags!: number;
+    #flagsNew!: string;
     #bot?: UserResponse;
     #slug?: string;
+    #vibegrationsProjectId?: SnowflakeType;
     #guildId?: SnowflakeType;
     #rpcOrigins?: string[];
     #botPublic?: boolean;
@@ -25843,8 +25880,6 @@ export class InviteApplicationResponseBuilder implements InviteApplicationRespon
     #installParams?: ApplicationOAuth2InstallParamsResponse;
     #integrationTypesConfig?: Map<string, ApplicationIntegrationTypeConfigurationResponse>;
     #verifyKey!: string;
-    #flags!: number;
-    #flagsNew!: string;
     #maxParticipants?: number | null;
     #tags?: Set<string>;
     constructor(options: {
@@ -25855,8 +25890,11 @@ export class InviteApplicationResponseBuilder implements InviteApplicationRespon
         type: null | ApplicationTypes;
         coverImage?: string;
         primarySkuId?: SnowflakeType;
+        flags: number;
+        flagsNew: string;
         bot?: UserResponse;
         slug?: string;
+        vibegrationsProjectId?: SnowflakeType;
         guildId?: SnowflakeType;
         rpcOrigins?: string[];
         botPublic?: boolean;
@@ -25869,8 +25907,6 @@ export class InviteApplicationResponseBuilder implements InviteApplicationRespon
             [key: string]: RawTypes.ApplicationIntegrationTypeConfigurationResponse;
         };
         verifyKey: string;
-        flags: number;
-        flagsNew: string;
         maxParticipants?: number | null;
         tags?: Set<string> | string[];
     }) {
@@ -25881,8 +25917,11 @@ export class InviteApplicationResponseBuilder implements InviteApplicationRespon
         this.type = options.type;
         this.coverImage = options.coverImage;
         this.primarySkuId = options.primarySkuId;
+        this.flags = options.flags;
+        this.flagsNew = options.flagsNew;
         this.bot = options.bot;
         this.slug = options.slug;
+        this.vibegrationsProjectId = options.vibegrationsProjectId;
         this.guildId = options.guildId;
         this.rpcOrigins = options.rpcOrigins;
         this.botPublic = options.botPublic;
@@ -25893,8 +25932,6 @@ export class InviteApplicationResponseBuilder implements InviteApplicationRespon
         this.installParams = options.installParams;
         this.integrationTypesConfig = options.integrationTypesConfig;
         this.verifyKey = options.verifyKey;
-        this.flags = options.flags;
-        this.flagsNew = options.flagsNew;
         this.maxParticipants = options.maxParticipants;
         this.tags = options.tags;
     }
@@ -25919,11 +25956,20 @@ export class InviteApplicationResponseBuilder implements InviteApplicationRespon
     get primarySkuId(): SnowflakeType | undefined {
         return this.#primarySkuId;
     }
+    get flags(): number {
+        return this.#flags;
+    }
+    get flagsNew(): string {
+        return this.#flagsNew;
+    }
     get bot(): UserResponse | undefined {
         return this.#bot;
     }
     get slug(): string | undefined {
         return this.#slug;
+    }
+    get vibegrationsProjectId(): SnowflakeType | undefined {
+        return this.#vibegrationsProjectId;
     }
     get guildId(): SnowflakeType | undefined {
         return this.#guildId;
@@ -25955,12 +26001,6 @@ export class InviteApplicationResponseBuilder implements InviteApplicationRespon
     get verifyKey(): string {
         return this.#verifyKey;
     }
-    get flags(): number {
-        return this.#flags;
-    }
-    get flagsNew(): string {
-        return this.#flagsNew;
-    }
     get maxParticipants(): (number | null) | undefined {
         return this.#maxParticipants;
     }
@@ -25988,11 +26028,20 @@ export class InviteApplicationResponseBuilder implements InviteApplicationRespon
     set primarySkuId(value: SnowflakeType | undefined) {
         this.#primarySkuId = value;
     }
+    set flags(value: number) {
+        this.#flags = value;
+    }
+    set flagsNew(value: string) {
+        this.#flagsNew = value;
+    }
     set bot(value: UserResponse | undefined) {
         this.#bot = value;
     }
     set slug(value: string | undefined) {
         this.#slug = value;
+    }
+    set vibegrationsProjectId(value: SnowflakeType | undefined) {
+        this.#vibegrationsProjectId = value;
     }
     set guildId(value: SnowflakeType | undefined) {
         this.#guildId = value;
@@ -26026,12 +26075,6 @@ export class InviteApplicationResponseBuilder implements InviteApplicationRespon
     set verifyKey(value: string) {
         this.#verifyKey = value;
     }
-    set flags(value: number) {
-        this.#flags = value;
-    }
-    set flagsNew(value: string) {
-        this.#flagsNew = value;
-    }
     set maxParticipants(value: (number | null) | undefined) {
         this.#maxParticipants = value;
     }
@@ -26039,7 +26082,7 @@ export class InviteApplicationResponseBuilder implements InviteApplicationRespon
         this.#tags = value == null ? value : new Set(value);
     }
 }
-export function createInviteApplicationResponse(id: SnowflakeType, name: string, icon: string | null, description: string, type: null | ApplicationTypes, verifyKey: string, flags: number, flagsNew: string, coverImage?: string, primarySkuId?: SnowflakeType, bot?: UserResponse, slug?: string, guildId?: SnowflakeType, rpcOrigins?: string[], botPublic?: boolean, botRequireCodeGrant?: boolean, termsOfServiceUrl?: URL | `${string}:${string}`, privacyPolicyUrl?: URL | `${string}:${string}`, customInstallUrl?: URL | `${string}:${string}`, installParams?: ApplicationOAuth2InstallParamsResponse, integrationTypesConfig?: Map<string, ApplicationIntegrationTypeConfigurationResponse> | {
+export function createInviteApplicationResponse(id: SnowflakeType, name: string, icon: string | null, description: string, type: null | ApplicationTypes, flags: number, flagsNew: string, verifyKey: string, coverImage?: string, primarySkuId?: SnowflakeType, bot?: UserResponse, slug?: string, vibegrationsProjectId?: SnowflakeType, guildId?: SnowflakeType, rpcOrigins?: string[], botPublic?: boolean, botRequireCodeGrant?: boolean, termsOfServiceUrl?: URL | `${string}:${string}`, privacyPolicyUrl?: URL | `${string}:${string}`, customInstallUrl?: URL | `${string}:${string}`, installParams?: ApplicationOAuth2InstallParamsResponse, integrationTypesConfig?: Map<string, ApplicationIntegrationTypeConfigurationResponse> | {
     [key: string]: RawTypes.ApplicationIntegrationTypeConfigurationResponse;
 }, maxParticipants?: number | null, tags?: Set<string> | string[]): InviteApplicationResponse { return {
     id: id,
@@ -26047,13 +26090,14 @@ export function createInviteApplicationResponse(id: SnowflakeType, name: string,
     icon: icon,
     description: description,
     type: type,
-    verifyKey: verifyKey,
     flags: flags,
     flagsNew: flagsNew,
+    verifyKey: verifyKey,
     coverImage: coverImage,
     primarySkuId: primarySkuId,
     bot: bot,
     slug: slug,
+    vibegrationsProjectId: vibegrationsProjectId,
     guildId: guildId,
     rpcOrigins: rpcOrigins,
     botPublic: botPublic,
@@ -29585,7 +29629,6 @@ export interface MessageAttachmentRequest {
     waveform?: string | null;
     title?: string | null;
     isSpoiler?: boolean | null;
-    isRemix?: boolean | null;
     data: Blob;
 }
 export function fromRawMessageAttachmentRequest(src: RawTypes.MessageAttachmentRequest): MessageAttachmentRequest {
@@ -29597,7 +29640,6 @@ export function fromRawMessageAttachmentRequest(src: RawTypes.MessageAttachmentR
         waveform: src.waveform,
         title: src.title,
         isSpoiler: src.is_spoiler,
-        isRemix: src.is_remix,
         data: src.data
     };
 }
@@ -29610,7 +29652,6 @@ export function toRawMessageAttachmentRequest(src: MessageAttachmentRequest): Ra
         waveform: src.waveform,
         title: src.title,
         is_spoiler: src.isSpoiler,
-        is_remix: src.isRemix,
         data: src.data
     };
 }
@@ -29622,7 +29663,6 @@ export class MessageAttachmentRequestBuilder implements MessageAttachmentRequest
     #waveform?: string | null;
     #title?: string | null;
     #isSpoiler?: boolean | null;
-    #isRemix?: boolean | null;
     #data!: Blob;
     constructor(options: {
         id: SnowflakeType;
@@ -29632,7 +29672,6 @@ export class MessageAttachmentRequestBuilder implements MessageAttachmentRequest
         waveform?: string | null;
         title?: string | null;
         isSpoiler?: boolean | null;
-        isRemix?: boolean | null;
         data: Blob | Blob;
     }) {
         this.id = options.id;
@@ -29642,7 +29681,6 @@ export class MessageAttachmentRequestBuilder implements MessageAttachmentRequest
         this.waveform = options.waveform;
         this.title = options.title;
         this.isSpoiler = options.isSpoiler;
-        this.isRemix = options.isRemix;
         this.data = options.data;
     }
     get id(): SnowflakeType {
@@ -29665,9 +29703,6 @@ export class MessageAttachmentRequestBuilder implements MessageAttachmentRequest
     }
     get isSpoiler(): (boolean | null) | undefined {
         return this.#isSpoiler;
-    }
-    get isRemix(): (boolean | null) | undefined {
-        return this.#isRemix;
     }
     get data(): Blob {
         return this.#data;
@@ -29693,14 +29728,11 @@ export class MessageAttachmentRequestBuilder implements MessageAttachmentRequest
     set isSpoiler(value: (boolean | null) | undefined) {
         this.#isSpoiler = value;
     }
-    set isRemix(value: (boolean | null) | undefined) {
-        this.#isRemix = value;
-    }
     set data(value: Blob | Blob) {
         this.#data = value;
     }
 }
-export function createMessageAttachmentRequest(id: SnowflakeType, data: Blob | Blob, filename?: string | null, description?: string | null, durationSecs?: number | null, waveform?: string | null, title?: string | null, isSpoiler?: boolean | null, isRemix?: boolean | null): MessageAttachmentRequest { return {
+export function createMessageAttachmentRequest(id: SnowflakeType, data: Blob | Blob, filename?: string | null, description?: string | null, durationSecs?: number | null, waveform?: string | null, title?: string | null, isSpoiler?: boolean | null): MessageAttachmentRequest { return {
     id: id,
     data: data,
     filename: filename,
@@ -29708,8 +29740,7 @@ export function createMessageAttachmentRequest(id: SnowflakeType, data: Blob | B
     durationSecs: durationSecs,
     waveform: waveform,
     title: title,
-    isSpoiler: isSpoiler,
-    isRemix: isRemix
+    isSpoiler: isSpoiler
 }; }
 export interface MessageAttachmentResponse {
     id: SnowflakeType;
@@ -34869,6 +34900,216 @@ export function createPartialGuildSubscriptionIntegrationResponse(id: SnowflakeT
     name: name,
     account: account
 }; }
+export enum Permissions {
+    /**
+     * Allows creation of instant invites
+     */
+    CREATE_INSTANT_INVITE = 0,
+    /**
+     * Allows kicking members
+     */
+    KICK_MEMBERS = 1,
+    /**
+     * Allows banning members
+     */
+    BAN_MEMBERS = 2,
+    /**
+     * Allows all permissions and bypasses channel permission overwrites
+     */
+    ADMINISTRATOR = 3,
+    /**
+     * Allows management and editing of channels
+     */
+    MANAGE_CHANNELS = 4,
+    /**
+     * Allows management and editing of the guild
+     */
+    MANAGE_GUILD = 5,
+    /**
+     * Allows for adding new reactions to messages. This permission does not apply to reacting with an existing reaction on a message.
+     */
+    ADD_REACTIONS = 6,
+    /**
+     * Allows for viewing of audit logs
+     */
+    VIEW_AUDIT_LOG = 7,
+    /**
+     * Allows for using priority speaker in a voice channel
+     */
+    PRIORITY_SPEAKER = 8,
+    /**
+     * Allows the user to go live
+     */
+    STREAM = 9,
+    /**
+     * Allows guild members to view a channel, which includes reading messages in text channels and joining voice channels
+     */
+    VIEW_CHANNEL = 10,
+    /**
+     * Allows for sending messages in a channel and creating threads in a forum (does not allow sending messages in threads)
+     */
+    SEND_MESSAGES = 11,
+    /**
+     * Allows for sending of `\/tts` messages
+     */
+    SEND_TTS_MESSAGES = 12,
+    /**
+     * Allows for deletion of other users messages
+     */
+    MANAGE_MESSAGES = 13,
+    /**
+     * Links sent by users with this permission will be auto-embedded
+     */
+    EMBED_LINKS = 14,
+    /**
+     * Allows for uploading images and files
+     */
+    ATTACH_FILES = 15,
+    /**
+     * Allows for reading of message history
+     */
+    READ_MESSAGE_HISTORY = 16,
+    /**
+     * Allows for using the `\@everyone` tag to notify all users in a channel, and the `\@here` tag to notify all online users in a channel
+     */
+    MENTION_EVERYONE = 17,
+    /**
+     * Allows the usage of custom emojis from other servers
+     */
+    USE_EXTERNAL_EMOJIS = 18,
+    /**
+     * Allows for viewing guild insights
+     */
+    VIEW_GUILD_INSIGHTS = 19,
+    /**
+     * Allows for joining of a voice channel
+     */
+    CONNECT = 20,
+    /**
+     * Allows for speaking in a voice channel
+     */
+    SPEAK = 21,
+    /**
+     * Allows for muting members in a voice channel
+     */
+    MUTE_MEMBERS = 22,
+    /**
+     * Allows for deafening of members in a voice channel
+     */
+    DEAFEN_MEMBERS = 23,
+    /**
+     * Allows for moving of members between voice channels
+     */
+    MOVE_MEMBERS = 24,
+    /**
+     * Allows for using voice-activity-detection in a voice channel
+     */
+    USE_VAD = 25,
+    /**
+     * Allows for modification of own nickname
+     */
+    CHANGE_NICKNAME = 26,
+    /**
+     * Allows for modification of other users nicknames
+     */
+    MANAGE_NICKNAMES = 27,
+    /**
+     * Allows management and editing of roles
+     */
+    MANAGE_ROLES = 28,
+    /**
+     * Allows management and editing of webhooks
+     */
+    MANAGE_WEBHOOKS = 29,
+    /**
+     * Allows for editing and deleting emojis, stickers, and soundboard sounds created by all users
+     */
+    MANAGE_GUILD_EXPRESSIONS = 30,
+    /**
+     * Allows members to use application commands, including slash commands and context menu commands.
+     */
+    USE_APPLICATION_COMMANDS = 31,
+    /**
+     * Allows for requesting to speak in stage channels
+     */
+    REQUEST_TO_SPEAK = 32,
+    /**
+     * Allows for editing and deleting scheduled events created by all users
+     */
+    MANAGE_EVENTS = 33,
+    /**
+     * Allows for deleting and archiving threads, and viewing all private threads
+     */
+    MANAGE_THREADS = 34,
+    /**
+     * Allows for creating public and announcement threads
+     */
+    CREATE_PUBLIC_THREADS = 35,
+    /**
+     * Allows for creating private threads
+     */
+    CREATE_PRIVATE_THREADS = 36,
+    /**
+     * Allows the usage of custom stickers from other servers
+     */
+    USE_EXTERNAL_STICKERS = 37,
+    /**
+     * Allows for sending messages in threads
+     */
+    SEND_MESSAGES_IN_THREADS = 38,
+    /**
+     * Allows for using Activities (applications with the `EMBEDDED` flag)
+     */
+    USE_EMBEDDED_ACTIVITIES = 39,
+    /**
+     * Allows for timing out users to prevent them from sending or reacting to messages in chat and threads, and from speaking in voice and stage channels
+     */
+    MODERATE_MEMBERS = 40,
+    /**
+     * Allows for viewing role subscription insights
+     */
+    VIEW_CREATOR_MONETIZATION_ANALYTICS = 41,
+    /**
+     * Allows for using soundboard in a voice channel
+     */
+    USE_SOUNDBOARD = 42,
+    /**
+     * Allows for creating emojis, stickers, and soundboard sounds, and editing and deleting those created by the current user.
+     */
+    CREATE_GUILD_EXPRESSIONS = 43,
+    /**
+     * Allows for creating scheduled events, and editing and deleting those created by the current user.
+     */
+    CREATE_EVENTS = 44,
+    /**
+     * Allows the usage of custom soundboard sounds from other servers
+     */
+    USE_EXTERNAL_SOUNDS = 45,
+    /**
+     * Allows sending voice messages
+     */
+    SEND_VOICE_MESSAGES = 46,
+    /**
+     * Allows setting voice channel status
+     */
+    SET_VOICE_CHANNEL_STATUS = 48,
+    /**
+     * Allows sending polls
+     */
+    SEND_POLLS = 49,
+    /**
+     * Allows user-installed apps to send public responses. When disabled, users will still be allowed to use their apps but the responses will be ephemeral. This only applies to apps not also installed to the server.
+     */
+    USE_EXTERNAL_APPS = 50,
+    /**
+     * Allows pinning and unpinning messages
+     */
+    PIN_MESSAGES = 51,
+    /**
+     * Allows bypassing slowmode restrictions
+     */
+    BYPASS_SLOWMODE = 52
+}
 export interface PinnedMessageResponse {
     pinnedAt: Date;
     message: MessageResponse;
@@ -35931,8 +36172,11 @@ export interface PrivateApplicationResponse {
     type: null | ApplicationTypes;
     coverImage?: string;
     primarySkuId?: SnowflakeType;
+    flags: number;
+    flagsNew: string;
     bot?: UserResponse;
     slug?: string;
+    vibegrationsProjectId?: SnowflakeType;
     guildId?: SnowflakeType;
     rpcOrigins?: string[];
     botPublic?: boolean;
@@ -35943,8 +36187,6 @@ export interface PrivateApplicationResponse {
     installParams?: ApplicationOAuth2InstallParamsResponse;
     integrationTypesConfig?: Map<string, ApplicationIntegrationTypeConfigurationResponse>;
     verifyKey: string;
-    flags: number;
-    flagsNew: string;
     maxParticipants?: number | null;
     tags?: Set<string>;
     redirectUris: URL[];
@@ -35970,8 +36212,11 @@ export function fromRawPrivateApplicationResponse(src: RawTypes.PrivateApplicati
         type: src.type,
         coverImage: src.cover_image,
         primarySkuId: src.primary_sku_id,
+        flags: src.flags,
+        flagsNew: src.flags_new,
         bot: src.bot == null ? src.bot : fromRawUserResponse(src.bot),
         slug: src.slug,
+        vibegrationsProjectId: src.vibegrations_project_id,
         guildId: src.guild_id,
         rpcOrigins: src.rpc_origins,
         botPublic: src.bot_public,
@@ -35982,8 +36227,6 @@ export function fromRawPrivateApplicationResponse(src: RawTypes.PrivateApplicati
         installParams: src.install_params == null ? src.install_params : fromRawApplicationOAuth2InstallParamsResponse(src.install_params),
         integrationTypesConfig: src.integration_types_config == null ? src.integration_types_config : new Map(Object.entries(src.integration_types_config).map(([key, value]) => [key, fromRawApplicationIntegrationTypeConfigurationResponse(value)])),
         verifyKey: src.verify_key,
-        flags: src.flags,
-        flagsNew: src.flags_new,
         maxParticipants: src.max_participants,
         tags: src.tags == null ? src.tags : new Set(src.tags),
         redirectUris: src.redirect_uris.map(item => new URL(item)),
@@ -36010,8 +36253,11 @@ export function toRawPrivateApplicationResponse(src: PrivateApplicationResponse)
         type: src.type,
         cover_image: src.coverImage,
         primary_sku_id: src.primarySkuId,
+        flags: src.flags,
+        flags_new: src.flagsNew,
         bot: src.bot == null ? src.bot : toRawUserResponse(src.bot),
         slug: src.slug,
+        vibegrations_project_id: src.vibegrationsProjectId,
         guild_id: src.guildId,
         rpc_origins: src.rpcOrigins,
         bot_public: src.botPublic,
@@ -36022,8 +36268,6 @@ export function toRawPrivateApplicationResponse(src: PrivateApplicationResponse)
         install_params: src.installParams == null ? src.installParams : toRawApplicationOAuth2InstallParamsResponse(src.installParams),
         integration_types_config: src.integrationTypesConfig == null ? src.integrationTypesConfig : Object.fromEntries([...src.integrationTypesConfig].map(([key, value]) => [key, toRawApplicationIntegrationTypeConfigurationResponse(value)])),
         verify_key: src.verifyKey,
-        flags: src.flags,
-        flags_new: src.flagsNew,
         max_participants: src.maxParticipants,
         tags: src.tags == null ? src.tags : [...src.tags],
         redirect_uris: src.redirectUris.map(item => item.toString() as `${string}:${string}`),
@@ -36049,8 +36293,11 @@ export class PrivateApplicationResponseBuilder implements PrivateApplicationResp
     #type!: null | ApplicationTypes;
     #coverImage?: string;
     #primarySkuId?: SnowflakeType;
+    #flags!: number;
+    #flagsNew!: string;
     #bot?: UserResponse;
     #slug?: string;
+    #vibegrationsProjectId?: SnowflakeType;
     #guildId?: SnowflakeType;
     #rpcOrigins?: string[];
     #botPublic?: boolean;
@@ -36061,8 +36308,6 @@ export class PrivateApplicationResponseBuilder implements PrivateApplicationResp
     #installParams?: ApplicationOAuth2InstallParamsResponse;
     #integrationTypesConfig?: Map<string, ApplicationIntegrationTypeConfigurationResponse>;
     #verifyKey!: string;
-    #flags!: number;
-    #flagsNew!: string;
     #maxParticipants?: number | null;
     #tags?: Set<string>;
     #redirectUris!: URL[];
@@ -36086,8 +36331,11 @@ export class PrivateApplicationResponseBuilder implements PrivateApplicationResp
         type: null | ApplicationTypes;
         coverImage?: string;
         primarySkuId?: SnowflakeType;
+        flags: number;
+        flagsNew: string;
         bot?: UserResponse;
         slug?: string;
+        vibegrationsProjectId?: SnowflakeType;
         guildId?: SnowflakeType;
         rpcOrigins?: string[];
         botPublic?: boolean;
@@ -36100,8 +36348,6 @@ export class PrivateApplicationResponseBuilder implements PrivateApplicationResp
             [key: string]: RawTypes.ApplicationIntegrationTypeConfigurationResponse;
         };
         verifyKey: string;
-        flags: number;
-        flagsNew: string;
         maxParticipants?: number | null;
         tags?: Set<string> | string[];
         redirectUris: (URL | `${string}:${string}`)[];
@@ -36125,8 +36371,11 @@ export class PrivateApplicationResponseBuilder implements PrivateApplicationResp
         this.type = options.type;
         this.coverImage = options.coverImage;
         this.primarySkuId = options.primarySkuId;
+        this.flags = options.flags;
+        this.flagsNew = options.flagsNew;
         this.bot = options.bot;
         this.slug = options.slug;
+        this.vibegrationsProjectId = options.vibegrationsProjectId;
         this.guildId = options.guildId;
         this.rpcOrigins = options.rpcOrigins;
         this.botPublic = options.botPublic;
@@ -36137,8 +36386,6 @@ export class PrivateApplicationResponseBuilder implements PrivateApplicationResp
         this.installParams = options.installParams;
         this.integrationTypesConfig = options.integrationTypesConfig;
         this.verifyKey = options.verifyKey;
-        this.flags = options.flags;
-        this.flagsNew = options.flagsNew;
         this.maxParticipants = options.maxParticipants;
         this.tags = options.tags;
         this.redirectUris = options.redirectUris;
@@ -36176,11 +36423,20 @@ export class PrivateApplicationResponseBuilder implements PrivateApplicationResp
     get primarySkuId(): SnowflakeType | undefined {
         return this.#primarySkuId;
     }
+    get flags(): number {
+        return this.#flags;
+    }
+    get flagsNew(): string {
+        return this.#flagsNew;
+    }
     get bot(): UserResponse | undefined {
         return this.#bot;
     }
     get slug(): string | undefined {
         return this.#slug;
+    }
+    get vibegrationsProjectId(): SnowflakeType | undefined {
+        return this.#vibegrationsProjectId;
     }
     get guildId(): SnowflakeType | undefined {
         return this.#guildId;
@@ -36211,12 +36467,6 @@ export class PrivateApplicationResponseBuilder implements PrivateApplicationResp
     }
     get verifyKey(): string {
         return this.#verifyKey;
-    }
-    get flags(): number {
-        return this.#flags;
-    }
-    get flagsNew(): string {
-        return this.#flagsNew;
     }
     get maxParticipants(): (number | null) | undefined {
         return this.#maxParticipants;
@@ -36284,11 +36534,20 @@ export class PrivateApplicationResponseBuilder implements PrivateApplicationResp
     set primarySkuId(value: SnowflakeType | undefined) {
         this.#primarySkuId = value;
     }
+    set flags(value: number) {
+        this.#flags = value;
+    }
+    set flagsNew(value: string) {
+        this.#flagsNew = value;
+    }
     set bot(value: UserResponse | undefined) {
         this.#bot = value;
     }
     set slug(value: string | undefined) {
         this.#slug = value;
+    }
+    set vibegrationsProjectId(value: SnowflakeType | undefined) {
+        this.#vibegrationsProjectId = value;
     }
     set guildId(value: SnowflakeType | undefined) {
         this.#guildId = value;
@@ -36321,12 +36580,6 @@ export class PrivateApplicationResponseBuilder implements PrivateApplicationResp
     }
     set verifyKey(value: string) {
         this.#verifyKey = value;
-    }
-    set flags(value: number) {
-        this.#flags = value;
-    }
-    set flagsNew(value: string) {
-        this.#flagsNew = value;
     }
     set maxParticipants(value: (number | null) | undefined) {
         this.#maxParticipants = value;
@@ -36374,7 +36627,7 @@ export class PrivateApplicationResponseBuilder implements PrivateApplicationResp
         this.#eligibleOauth2Scopes = value;
     }
 }
-export function createPrivateApplicationResponse(id: SnowflakeType, name: string, icon: string | null, description: string, type: null | ApplicationTypes, verifyKey: string, flags: number, flagsNew: string, redirectUris: (URL | `${string}:${string}`)[], interactionsEndpointUrl: (URL | `${string}:${string}`) | null, roleConnectionsVerificationUrl: (URL | `${string}:${string}`) | null, owner: UserResponse, approximateGuildCount: number, approximateUserInstallCount: number, approximateUserAuthorizationCount: number, explicitContentFilter: ApplicationExplicitContentFilterTypes, team: null | TeamResponse, eligibleOauth2Scopes: OAuth2Scopes[], coverImage?: string, primarySkuId?: SnowflakeType, bot?: UserResponse, slug?: string, guildId?: SnowflakeType, rpcOrigins?: string[], botPublic?: boolean, botRequireCodeGrant?: boolean, termsOfServiceUrl?: URL | `${string}:${string}`, privacyPolicyUrl?: URL | `${string}:${string}`, customInstallUrl?: URL | `${string}:${string}`, installParams?: ApplicationOAuth2InstallParamsResponse, integrationTypesConfig?: Map<string, ApplicationIntegrationTypeConfigurationResponse> | {
+export function createPrivateApplicationResponse(id: SnowflakeType, name: string, icon: string | null, description: string, type: null | ApplicationTypes, flags: number, flagsNew: string, verifyKey: string, redirectUris: (URL | `${string}:${string}`)[], interactionsEndpointUrl: (URL | `${string}:${string}`) | null, roleConnectionsVerificationUrl: (URL | `${string}:${string}`) | null, owner: UserResponse, approximateGuildCount: number, approximateUserInstallCount: number, approximateUserAuthorizationCount: number, explicitContentFilter: ApplicationExplicitContentFilterTypes, team: null | TeamResponse, eligibleOauth2Scopes: OAuth2Scopes[], coverImage?: string, primarySkuId?: SnowflakeType, bot?: UserResponse, slug?: string, vibegrationsProjectId?: SnowflakeType, guildId?: SnowflakeType, rpcOrigins?: string[], botPublic?: boolean, botRequireCodeGrant?: boolean, termsOfServiceUrl?: URL | `${string}:${string}`, privacyPolicyUrl?: URL | `${string}:${string}`, customInstallUrl?: URL | `${string}:${string}`, installParams?: ApplicationOAuth2InstallParamsResponse, integrationTypesConfig?: Map<string, ApplicationIntegrationTypeConfigurationResponse> | {
     [key: string]: RawTypes.ApplicationIntegrationTypeConfigurationResponse;
 }, maxParticipants?: number | null, tags?: Set<string> | string[], eventWebhooksUrl?: (URL | `${string}:${string}`) | null, eventWebhooksStatus?: ApplicationEventWebhooksStatus, eventWebhooksTypes?: Set<ActionTypes.APPLICATION_AUTHORIZED | ActionTypes.APPLICATION_DEAUTHORIZED | ActionTypes.ENTITLEMENT_CREATE | ActionTypes.ENTITLEMENT_DELETE | ActionTypes.ENTITLEMENT_UPDATE | ActionTypes.GAME_DIRECT_MESSAGE_CREATE | ActionTypes.GAME_DIRECT_MESSAGE_DELETE | ActionTypes.GAME_DIRECT_MESSAGE_UPDATE | ActionTypes.LOBBY_MESSAGE_CREATE | ActionTypes.LOBBY_MESSAGE_DELETE | ActionTypes.LOBBY_MESSAGE_UPDATE | ActionTypes.QUEST_USER_ENROLLMENT> | (ActionTypes.APPLICATION_AUTHORIZED | ActionTypes.APPLICATION_DEAUTHORIZED | ActionTypes.ENTITLEMENT_CREATE | ActionTypes.ENTITLEMENT_DELETE | ActionTypes.ENTITLEMENT_UPDATE | ActionTypes.GAME_DIRECT_MESSAGE_CREATE | ActionTypes.GAME_DIRECT_MESSAGE_DELETE | ActionTypes.GAME_DIRECT_MESSAGE_UPDATE | ActionTypes.LOBBY_MESSAGE_CREATE | ActionTypes.LOBBY_MESSAGE_DELETE | ActionTypes.LOBBY_MESSAGE_UPDATE | ActionTypes.QUEST_USER_ENROLLMENT)[]): PrivateApplicationResponse { return {
     id: id,
@@ -36382,9 +36635,9 @@ export function createPrivateApplicationResponse(id: SnowflakeType, name: string
     icon: icon,
     description: description,
     type: type,
-    verifyKey: verifyKey,
     flags: flags,
     flagsNew: flagsNew,
+    verifyKey: verifyKey,
     redirectUris: redirectUris.map(item => new URL(item)),
     interactionsEndpointUrl: interactionsEndpointUrl === null ? interactionsEndpointUrl : new URL(interactionsEndpointUrl),
     roleConnectionsVerificationUrl: roleConnectionsVerificationUrl === null ? roleConnectionsVerificationUrl : new URL(roleConnectionsVerificationUrl),
@@ -36399,6 +36652,7 @@ export function createPrivateApplicationResponse(id: SnowflakeType, name: string
     primarySkuId: primarySkuId,
     bot: bot,
     slug: slug,
+    vibegrationsProjectId: vibegrationsProjectId,
     guildId: guildId,
     rpcOrigins: rpcOrigins,
     botPublic: botPublic,

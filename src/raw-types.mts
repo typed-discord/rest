@@ -1091,8 +1091,11 @@ export interface ApplicationResponse {
     type: null | ApplicationTypes;
     cover_image?: string;
     primary_sku_id?: SnowflakeType;
+    flags: number;
+    flags_new: string;
     bot?: UserResponse;
     slug?: string;
+    vibegrations_project_id?: SnowflakeType;
     guild_id?: SnowflakeType;
     rpc_origins?: string[];
     bot_public?: boolean;
@@ -1105,12 +1108,10 @@ export interface ApplicationResponse {
         [key: string]: ApplicationIntegrationTypeConfigurationResponse;
     };
     verify_key: string;
-    flags: number;
-    flags_new: string;
     max_participants?: number | null;
     tags?: string[];
 }
-export function ApplicationResponse(id: ApplicationResponse["id"], name: ApplicationResponse["name"], icon: ApplicationResponse["icon"], description: ApplicationResponse["description"], type: ApplicationResponse["type"], verify_key: ApplicationResponse["verify_key"], flags: ApplicationResponse["flags"], flags_new: ApplicationResponse["flags_new"], optional?: Omit<ApplicationResponse, "id" | "name" | "icon" | "description" | "type" | "verify_key" | "flags" | "flags_new">): ApplicationResponse { return { id, name, icon, description, type, verify_key, flags, flags_new, ...optional }; }
+export function ApplicationResponse(id: ApplicationResponse["id"], name: ApplicationResponse["name"], icon: ApplicationResponse["icon"], description: ApplicationResponse["description"], type: ApplicationResponse["type"], flags: ApplicationResponse["flags"], flags_new: ApplicationResponse["flags_new"], verify_key: ApplicationResponse["verify_key"], optional?: Omit<ApplicationResponse, "id" | "name" | "icon" | "description" | "type" | "flags" | "flags_new" | "verify_key">): ApplicationResponse { return { id, name, icon, description, type, flags, flags_new, verify_key, ...optional }; }
 export interface ApplicationRoleConnectionsMetadataItemRequest {
     type: MetadataItemTypes;
     key: string;
@@ -1569,9 +1570,11 @@ export interface BasicApplicationResponseWithBot {
     type: null | ApplicationTypes;
     cover_image?: string;
     primary_sku_id?: SnowflakeType;
+    flags: number;
+    flags_new: string;
     bot?: UserResponse;
 }
-export function BasicApplicationResponseWithBot(id: BasicApplicationResponseWithBot["id"], name: BasicApplicationResponseWithBot["name"], icon: BasicApplicationResponseWithBot["icon"], description: BasicApplicationResponseWithBot["description"], type: BasicApplicationResponseWithBot["type"], optional?: Omit<BasicApplicationResponseWithBot, "id" | "name" | "icon" | "description" | "type">): BasicApplicationResponseWithBot { return { id, name, icon, description, type, ...optional }; }
+export function BasicApplicationResponseWithBot(id: BasicApplicationResponseWithBot["id"], name: BasicApplicationResponseWithBot["name"], icon: BasicApplicationResponseWithBot["icon"], description: BasicApplicationResponseWithBot["description"], type: BasicApplicationResponseWithBot["type"], flags: BasicApplicationResponseWithBot["flags"], flags_new: BasicApplicationResponseWithBot["flags_new"], optional?: Omit<BasicApplicationResponseWithBot, "id" | "name" | "icon" | "description" | "type" | "flags" | "flags_new">): BasicApplicationResponseWithBot { return { id, name, icon, description, type, flags, flags_new, ...optional }; }
 export interface BasicGuildMemberResponse {
     /**
      * the member's guild avatar hash
@@ -2096,6 +2099,10 @@ export interface CreateGuildInviteRequest {
     target_application_id?: null | SnowflakeType;
     target_type?: null | (InviteTargetTypes.STREAM | InviteTargetTypes.EMBEDDED_APPLICATION);
     role_ids?: (string | SnowflakeType[]) | null;
+    /**
+     * The IDs of the users to target with this invite.
+     */
+    target_user_ids?: (string | SnowflakeType[]) | null;
 }
 export function CreateGuildInviteRequest(optional?: CreateGuildInviteRequest): CreateGuildInviteRequest { return { ...optional }; }
 export interface CreateMessageInteractionCallbackRequest {
@@ -3134,7 +3141,6 @@ export interface GuildInviteResponse {
     guild_scheduled_event?: ScheduledEventResponse;
     target_channel_id?: SnowflakeType;
     target_message_id?: SnowflakeType;
-    liveliness?: null | GuildLivelinessResponse;
     uses?: number;
     max_uses?: number;
     temporary?: boolean;
@@ -3186,11 +3192,6 @@ export interface GuildJoinRequestsListResponse {
     guild_join_requests?: GuildJoinRequestResponse[];
 }
 export function GuildJoinRequestsListResponse(optional?: GuildJoinRequestsListResponse): GuildJoinRequestsListResponse { return { ...optional }; }
-export interface GuildLivelinessResponse {
-    msg_activity_bins: number[];
-    last_updated_ts?: string | null;
-}
-export function GuildLivelinessResponse(msg_activity_bins: GuildLivelinessResponse["msg_activity_bins"], optional?: Omit<GuildLivelinessResponse, "msg_activity_bins">): GuildLivelinessResponse { return { msg_activity_bins, ...optional }; }
 export enum GuildMFALevel {
     /**
      * Guild has no MFA\/2FA requirement for moderation actions
@@ -3757,9 +3758,11 @@ export interface IntegrationApplicationResponse {
     type: null | ApplicationTypes;
     cover_image?: string;
     primary_sku_id?: SnowflakeType;
+    flags: number;
+    flags_new: string;
     bot?: UserResponse;
 }
-export function IntegrationApplicationResponse(id: IntegrationApplicationResponse["id"], name: IntegrationApplicationResponse["name"], icon: IntegrationApplicationResponse["icon"], description: IntegrationApplicationResponse["description"], type: IntegrationApplicationResponse["type"], optional?: Omit<IntegrationApplicationResponse, "id" | "name" | "icon" | "description" | "type">): IntegrationApplicationResponse { return { id, name, icon, description, type, ...optional }; }
+export function IntegrationApplicationResponse(id: IntegrationApplicationResponse["id"], name: IntegrationApplicationResponse["name"], icon: IntegrationApplicationResponse["icon"], description: IntegrationApplicationResponse["description"], type: IntegrationApplicationResponse["type"], flags: IntegrationApplicationResponse["flags"], flags_new: IntegrationApplicationResponse["flags_new"], optional?: Omit<IntegrationApplicationResponse, "id" | "name" | "icon" | "description" | "type" | "flags" | "flags_new">): IntegrationApplicationResponse { return { id, name, icon, description, type, flags, flags_new, ...optional }; }
 export enum IntegrationExpireBehaviorTypes {
     /**
      * Remove role
@@ -3885,8 +3888,11 @@ export interface InviteApplicationResponse {
     type: null | ApplicationTypes;
     cover_image?: string;
     primary_sku_id?: SnowflakeType;
+    flags: number;
+    flags_new: string;
     bot?: UserResponse;
     slug?: string;
+    vibegrations_project_id?: SnowflakeType;
     guild_id?: SnowflakeType;
     rpc_origins?: string[];
     bot_public?: boolean;
@@ -3899,12 +3905,10 @@ export interface InviteApplicationResponse {
         [key: string]: ApplicationIntegrationTypeConfigurationResponse;
     };
     verify_key: string;
-    flags: number;
-    flags_new: string;
     max_participants?: number | null;
     tags?: string[];
 }
-export function InviteApplicationResponse(id: InviteApplicationResponse["id"], name: InviteApplicationResponse["name"], icon: InviteApplicationResponse["icon"], description: InviteApplicationResponse["description"], type: InviteApplicationResponse["type"], verify_key: InviteApplicationResponse["verify_key"], flags: InviteApplicationResponse["flags"], flags_new: InviteApplicationResponse["flags_new"], optional?: Omit<InviteApplicationResponse, "id" | "name" | "icon" | "description" | "type" | "verify_key" | "flags" | "flags_new">): InviteApplicationResponse { return { id, name, icon, description, type, verify_key, flags, flags_new, ...optional }; }
+export function InviteApplicationResponse(id: InviteApplicationResponse["id"], name: InviteApplicationResponse["name"], icon: InviteApplicationResponse["icon"], description: InviteApplicationResponse["description"], type: InviteApplicationResponse["type"], flags: InviteApplicationResponse["flags"], flags_new: InviteApplicationResponse["flags_new"], verify_key: InviteApplicationResponse["verify_key"], optional?: Omit<InviteApplicationResponse, "id" | "name" | "icon" | "description" | "type" | "flags" | "flags_new" | "verify_key">): InviteApplicationResponse { return { id, name, icon, description, type, flags, flags_new, verify_key, ...optional }; }
 export interface InviteChannelRecipientResponse {
     id: SnowflakeType;
     username: string;
@@ -4247,7 +4251,6 @@ export interface MessageAttachmentRequest {
     waveform?: string | null;
     title?: string | null;
     is_spoiler?: boolean | null;
-    is_remix?: boolean | null;
     data: Blob;
 }
 export function MessageAttachmentRequest(id: MessageAttachmentRequest["id"], data: MessageAttachmentRequest["data"], optional?: Omit<MessageAttachmentRequest, "id" | "data">): MessageAttachmentRequest { return { id, data, ...optional }; }
@@ -5222,6 +5225,216 @@ export interface PartialGuildSubscriptionIntegrationResponse {
     account: AccountResponse;
 }
 export function PartialGuildSubscriptionIntegrationResponse(id: PartialGuildSubscriptionIntegrationResponse["id"], name: PartialGuildSubscriptionIntegrationResponse["name"], account: PartialGuildSubscriptionIntegrationResponse["account"]): PartialGuildSubscriptionIntegrationResponse { return { type: IntegrationTypes.GUILD_SUBSCRIPTION, id, name, account }; }
+export enum Permissions {
+    /**
+     * Allows creation of instant invites
+     */
+    CREATE_INSTANT_INVITE = 0,
+    /**
+     * Allows kicking members
+     */
+    KICK_MEMBERS = 1,
+    /**
+     * Allows banning members
+     */
+    BAN_MEMBERS = 2,
+    /**
+     * Allows all permissions and bypasses channel permission overwrites
+     */
+    ADMINISTRATOR = 3,
+    /**
+     * Allows management and editing of channels
+     */
+    MANAGE_CHANNELS = 4,
+    /**
+     * Allows management and editing of the guild
+     */
+    MANAGE_GUILD = 5,
+    /**
+     * Allows for adding new reactions to messages. This permission does not apply to reacting with an existing reaction on a message.
+     */
+    ADD_REACTIONS = 6,
+    /**
+     * Allows for viewing of audit logs
+     */
+    VIEW_AUDIT_LOG = 7,
+    /**
+     * Allows for using priority speaker in a voice channel
+     */
+    PRIORITY_SPEAKER = 8,
+    /**
+     * Allows the user to go live
+     */
+    STREAM = 9,
+    /**
+     * Allows guild members to view a channel, which includes reading messages in text channels and joining voice channels
+     */
+    VIEW_CHANNEL = 10,
+    /**
+     * Allows for sending messages in a channel and creating threads in a forum (does not allow sending messages in threads)
+     */
+    SEND_MESSAGES = 11,
+    /**
+     * Allows for sending of `\/tts` messages
+     */
+    SEND_TTS_MESSAGES = 12,
+    /**
+     * Allows for deletion of other users messages
+     */
+    MANAGE_MESSAGES = 13,
+    /**
+     * Links sent by users with this permission will be auto-embedded
+     */
+    EMBED_LINKS = 14,
+    /**
+     * Allows for uploading images and files
+     */
+    ATTACH_FILES = 15,
+    /**
+     * Allows for reading of message history
+     */
+    READ_MESSAGE_HISTORY = 16,
+    /**
+     * Allows for using the `\@everyone` tag to notify all users in a channel, and the `\@here` tag to notify all online users in a channel
+     */
+    MENTION_EVERYONE = 17,
+    /**
+     * Allows the usage of custom emojis from other servers
+     */
+    USE_EXTERNAL_EMOJIS = 18,
+    /**
+     * Allows for viewing guild insights
+     */
+    VIEW_GUILD_INSIGHTS = 19,
+    /**
+     * Allows for joining of a voice channel
+     */
+    CONNECT = 20,
+    /**
+     * Allows for speaking in a voice channel
+     */
+    SPEAK = 21,
+    /**
+     * Allows for muting members in a voice channel
+     */
+    MUTE_MEMBERS = 22,
+    /**
+     * Allows for deafening of members in a voice channel
+     */
+    DEAFEN_MEMBERS = 23,
+    /**
+     * Allows for moving of members between voice channels
+     */
+    MOVE_MEMBERS = 24,
+    /**
+     * Allows for using voice-activity-detection in a voice channel
+     */
+    USE_VAD = 25,
+    /**
+     * Allows for modification of own nickname
+     */
+    CHANGE_NICKNAME = 26,
+    /**
+     * Allows for modification of other users nicknames
+     */
+    MANAGE_NICKNAMES = 27,
+    /**
+     * Allows management and editing of roles
+     */
+    MANAGE_ROLES = 28,
+    /**
+     * Allows management and editing of webhooks
+     */
+    MANAGE_WEBHOOKS = 29,
+    /**
+     * Allows for editing and deleting emojis, stickers, and soundboard sounds created by all users
+     */
+    MANAGE_GUILD_EXPRESSIONS = 30,
+    /**
+     * Allows members to use application commands, including slash commands and context menu commands.
+     */
+    USE_APPLICATION_COMMANDS = 31,
+    /**
+     * Allows for requesting to speak in stage channels
+     */
+    REQUEST_TO_SPEAK = 32,
+    /**
+     * Allows for editing and deleting scheduled events created by all users
+     */
+    MANAGE_EVENTS = 33,
+    /**
+     * Allows for deleting and archiving threads, and viewing all private threads
+     */
+    MANAGE_THREADS = 34,
+    /**
+     * Allows for creating public and announcement threads
+     */
+    CREATE_PUBLIC_THREADS = 35,
+    /**
+     * Allows for creating private threads
+     */
+    CREATE_PRIVATE_THREADS = 36,
+    /**
+     * Allows the usage of custom stickers from other servers
+     */
+    USE_EXTERNAL_STICKERS = 37,
+    /**
+     * Allows for sending messages in threads
+     */
+    SEND_MESSAGES_IN_THREADS = 38,
+    /**
+     * Allows for using Activities (applications with the `EMBEDDED` flag)
+     */
+    USE_EMBEDDED_ACTIVITIES = 39,
+    /**
+     * Allows for timing out users to prevent them from sending or reacting to messages in chat and threads, and from speaking in voice and stage channels
+     */
+    MODERATE_MEMBERS = 40,
+    /**
+     * Allows for viewing role subscription insights
+     */
+    VIEW_CREATOR_MONETIZATION_ANALYTICS = 41,
+    /**
+     * Allows for using soundboard in a voice channel
+     */
+    USE_SOUNDBOARD = 42,
+    /**
+     * Allows for creating emojis, stickers, and soundboard sounds, and editing and deleting those created by the current user.
+     */
+    CREATE_GUILD_EXPRESSIONS = 43,
+    /**
+     * Allows for creating scheduled events, and editing and deleting those created by the current user.
+     */
+    CREATE_EVENTS = 44,
+    /**
+     * Allows the usage of custom soundboard sounds from other servers
+     */
+    USE_EXTERNAL_SOUNDS = 45,
+    /**
+     * Allows sending voice messages
+     */
+    SEND_VOICE_MESSAGES = 46,
+    /**
+     * Allows setting voice channel status
+     */
+    SET_VOICE_CHANNEL_STATUS = 48,
+    /**
+     * Allows sending polls
+     */
+    SEND_POLLS = 49,
+    /**
+     * Allows user-installed apps to send public responses. When disabled, users will still be allowed to use their apps but the responses will be ephemeral. This only applies to apps not also installed to the server.
+     */
+    USE_EXTERNAL_APPS = 50,
+    /**
+     * Allows pinning and unpinning messages
+     */
+    PIN_MESSAGES = 51,
+    /**
+     * Allows bypassing slowmode restrictions
+     */
+    BYPASS_SLOWMODE = 52
+}
 export interface PinnedMessageResponse {
     pinned_at: string;
     message: MessageResponse;
@@ -5447,8 +5660,11 @@ export interface PrivateApplicationResponse {
     type: null | ApplicationTypes;
     cover_image?: string;
     primary_sku_id?: SnowflakeType;
+    flags: number;
+    flags_new: string;
     bot?: UserResponse;
     slug?: string;
+    vibegrations_project_id?: SnowflakeType;
     guild_id?: SnowflakeType;
     rpc_origins?: string[];
     bot_public?: boolean;
@@ -5461,8 +5677,6 @@ export interface PrivateApplicationResponse {
         [key: string]: ApplicationIntegrationTypeConfigurationResponse;
     };
     verify_key: string;
-    flags: number;
-    flags_new: string;
     max_participants?: number | null;
     tags?: string[];
     redirect_uris: `${string}:${string}`[];
@@ -5479,7 +5693,7 @@ export interface PrivateApplicationResponse {
     team: null | TeamResponse;
     eligible_oauth2_scopes: OAuth2Scopes[];
 }
-export function PrivateApplicationResponse(id: PrivateApplicationResponse["id"], name: PrivateApplicationResponse["name"], icon: PrivateApplicationResponse["icon"], description: PrivateApplicationResponse["description"], type: PrivateApplicationResponse["type"], verify_key: PrivateApplicationResponse["verify_key"], flags: PrivateApplicationResponse["flags"], flags_new: PrivateApplicationResponse["flags_new"], redirect_uris: PrivateApplicationResponse["redirect_uris"], interactions_endpoint_url: PrivateApplicationResponse["interactions_endpoint_url"], role_connections_verification_url: PrivateApplicationResponse["role_connections_verification_url"], owner: PrivateApplicationResponse["owner"], approximate_guild_count: PrivateApplicationResponse["approximate_guild_count"], approximate_user_install_count: PrivateApplicationResponse["approximate_user_install_count"], approximate_user_authorization_count: PrivateApplicationResponse["approximate_user_authorization_count"], explicit_content_filter: PrivateApplicationResponse["explicit_content_filter"], team: PrivateApplicationResponse["team"], eligible_oauth2_scopes: PrivateApplicationResponse["eligible_oauth2_scopes"], optional?: Omit<PrivateApplicationResponse, "id" | "name" | "icon" | "description" | "type" | "verify_key" | "flags" | "flags_new" | "redirect_uris" | "interactions_endpoint_url" | "role_connections_verification_url" | "owner" | "approximate_guild_count" | "approximate_user_install_count" | "approximate_user_authorization_count" | "explicit_content_filter" | "team" | "eligible_oauth2_scopes">): PrivateApplicationResponse { return { id, name, icon, description, type, verify_key, flags, flags_new, redirect_uris, interactions_endpoint_url, role_connections_verification_url, owner, approximate_guild_count, approximate_user_install_count, approximate_user_authorization_count, explicit_content_filter, team, eligible_oauth2_scopes, ...optional }; }
+export function PrivateApplicationResponse(id: PrivateApplicationResponse["id"], name: PrivateApplicationResponse["name"], icon: PrivateApplicationResponse["icon"], description: PrivateApplicationResponse["description"], type: PrivateApplicationResponse["type"], flags: PrivateApplicationResponse["flags"], flags_new: PrivateApplicationResponse["flags_new"], verify_key: PrivateApplicationResponse["verify_key"], redirect_uris: PrivateApplicationResponse["redirect_uris"], interactions_endpoint_url: PrivateApplicationResponse["interactions_endpoint_url"], role_connections_verification_url: PrivateApplicationResponse["role_connections_verification_url"], owner: PrivateApplicationResponse["owner"], approximate_guild_count: PrivateApplicationResponse["approximate_guild_count"], approximate_user_install_count: PrivateApplicationResponse["approximate_user_install_count"], approximate_user_authorization_count: PrivateApplicationResponse["approximate_user_authorization_count"], explicit_content_filter: PrivateApplicationResponse["explicit_content_filter"], team: PrivateApplicationResponse["team"], eligible_oauth2_scopes: PrivateApplicationResponse["eligible_oauth2_scopes"], optional?: Omit<PrivateApplicationResponse, "id" | "name" | "icon" | "description" | "type" | "flags" | "flags_new" | "verify_key" | "redirect_uris" | "interactions_endpoint_url" | "role_connections_verification_url" | "owner" | "approximate_guild_count" | "approximate_user_install_count" | "approximate_user_authorization_count" | "explicit_content_filter" | "team" | "eligible_oauth2_scopes">): PrivateApplicationResponse { return { id, name, icon, description, type, flags, flags_new, verify_key, redirect_uris, interactions_endpoint_url, role_connections_verification_url, owner, approximate_guild_count, approximate_user_install_count, approximate_user_authorization_count, explicit_content_filter, team, eligible_oauth2_scopes, ...optional }; }
 export interface PrivateChannelLocation {
     id: string;
     kind: EmbeddedActivityLocationKind.PRIVATE_CHANNEL;

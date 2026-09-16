@@ -2529,6 +2529,38 @@ export class Bot {
         return handleError(response);
     }
     /**
+     * Add multiple target users to an existing invite.
+     */
+    async bulkAddInviteTargetUsers(code: string, body: {
+        /**
+         * The IDs of the users to target.
+         */
+        userIds: Types.SnowflakeType[];
+    }) {
+        const response = await request("bulk_add_invite_target_users", null, "POST", `/invites/${code}/target-users/bulk-add`, this.#authorization, {
+            user_ids: body.userIds
+        }, undefined);
+        if (response.status === 204)
+            return;
+        return handleError(response);
+    }
+    /**
+     * Remove multiple target users from an existing invite.
+     */
+    async bulkRemoveInviteTargetUsers(code: string, body: {
+        /**
+         * The IDs of the users to stop targeting.
+         */
+        userIds: Types.SnowflakeType[];
+    }) {
+        const response = await request("bulk_remove_invite_target_users", null, "POST", `/invites/${code}/target-users/bulk-delete`, this.#authorization, {
+            user_ids: body.userIds
+        }, undefined);
+        if (response.status === 204)
+            return;
+        return handleError(response);
+    }
+    /**
      * Get the target users job status for an invite.
      */
     async getInviteTargetUsersJobStatus(code: string) {
@@ -2540,6 +2572,24 @@ export class Bot {
                     return Types.fromRawTargetUsersJobStatusResponse(json);
                 default: throw new Error();
             }
+        return handleError(response);
+    }
+    /**
+     * Add a target user to an existing invite.
+     */
+    async addInviteTargetUser(code: string, userId: RawTypes.SnowflakeType) {
+        const response = await request("add_invite_target_user", null, "PUT", `/invites/${code}/target-users/${userId}`, this.#authorization, undefined, undefined);
+        if (response.status === 204)
+            return;
+        return handleError(response);
+    }
+    /**
+     * Remove a target user from an existing invite.
+     */
+    async removeInviteTargetUser(code: string, userId: RawTypes.SnowflakeType) {
+        const response = await request("remove_invite_target_user", null, "DELETE", `/invites/${code}/target-users/${userId}`, this.#authorization, undefined, undefined);
+        if (response.status === 204)
+            return;
         return handleError(response);
     }
     async createOrJoinLobby(body: {

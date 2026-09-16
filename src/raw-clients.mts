@@ -903,10 +903,44 @@ export class Bot {
         return requestAndParse("update_invite_target_users", null, "PUT", `/invites/${code}/target-users`, this.#authorization, body, undefined) as Promise<void>;
     }
     /**
+     * Add multiple target users to an existing invite.
+     */
+    bulkAddInviteTargetUsers(code: string, body: {
+        /**
+         * The IDs of the users to target.
+         */
+        user_ids: RawTypes.SnowflakeType[];
+    }) {
+        return requestAndParse("bulk_add_invite_target_users", null, "POST", `/invites/${code}/target-users/bulk-add`, this.#authorization, body, undefined) as Promise<void>;
+    }
+    /**
+     * Remove multiple target users from an existing invite.
+     */
+    bulkRemoveInviteTargetUsers(code: string, body: {
+        /**
+         * The IDs of the users to stop targeting.
+         */
+        user_ids: RawTypes.SnowflakeType[];
+    }) {
+        return requestAndParse("bulk_remove_invite_target_users", null, "POST", `/invites/${code}/target-users/bulk-delete`, this.#authorization, body, undefined) as Promise<void>;
+    }
+    /**
      * Get the target users job status for an invite.
      */
     getInviteTargetUsersJobStatus(code: string) {
         return requestAndParse("get_invite_target_users_job_status", null, "GET", `/invites/${code}/target-users/job-status`, this.#authorization, undefined, undefined) as Promise<RawTypes.TargetUsersJobStatusResponse>;
+    }
+    /**
+     * Add a target user to an existing invite.
+     */
+    addInviteTargetUser(code: string, userId: RawTypes.SnowflakeType) {
+        return requestAndParse("add_invite_target_user", null, "PUT", `/invites/${code}/target-users/${userId}`, this.#authorization, undefined, undefined) as Promise<void>;
+    }
+    /**
+     * Remove a target user from an existing invite.
+     */
+    removeInviteTargetUser(code: string, userId: RawTypes.SnowflakeType) {
+        return requestAndParse("remove_invite_target_user", null, "DELETE", `/invites/${code}/target-users/${userId}`, this.#authorization, undefined, undefined) as Promise<void>;
     }
     createOrJoinLobby(body: {
         idle_timeout_seconds?: number | null;
